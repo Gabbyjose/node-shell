@@ -1,30 +1,43 @@
 var fs = require('fs');
+var request = require('request');
 
 module.exports = {
-  pwd : function (filename){
+  pwd : function (filename, done){
     //console.log(process.cwd());
-    var output = process.cwd();
-    process.stdout.write(output);
-    process.stdout.write('\nprompt > ');
+    done(process.cwd());
   },
+
   ls : function(filename){
     fs.readdir('.', function(err, files) {
       if (err) throw err;
       files.forEach(function(file) {
-        process.stdout.write(file.toString() + "\n");
-      })
-      process.stdout.write("prompt > ");
+        return file.toString() + "\n";
+      });
     });
   },
-  echo : function(filename, string){
-    process.stdout.write(string);
-    process.stdout.write('\nprompt > ');
+  echo : function(string){
+    return string;
   },
   cat : function(filename){
-    fs.readFile('./'+filename, (err, data) => {
+    fs.readFile('./'+filename, 'utf8', function(err, data) {
       if (err) throw err;
-      process.stdout.write(data);
-      process.stdout.write('\nprompt > ');
+//      this.done(data.toString());
     });
   },
+  // head : function(filename){
+  //   var something;
+  //   fs.readFile('./'+filename, 'utf8', (err, data) => {
+  //     if (err) throw err;
+  //     something = data.split('U+000A');
+  //     console.log('In FS!', something[0]);
+  //   });
+
+  // },
+  curl : function(url){
+    request('http://' + url, function(err, response, body){
+      if (err) throw err;
+      console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+      return 'body:' + body;
+    });
+  }
 };

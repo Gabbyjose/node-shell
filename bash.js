@@ -9,20 +9,33 @@ process.stdin.on('data', function (data) {
   var inputData = arrData.slice(1).join(" ");
   var output;
 
+  var done = function(output){
+    process.stdout.write(output);
+    process.stdout.write('\nprompt > ');
+  };
+
   if (cmd === 'pwd'){
-    required.pwd();
+    required.pwd(null, done);
   }
   else if (cmd === 'date'){
-    output = new Date().toString();
+    done(new Date().toString());
   }
   else if (cmd === 'ls'){
-    required.ls();
+    required.ls(null, done);
   }
   else if (cmd === 'echo'){
-    required.echo(inputData);
+    output = required.echo(inputData);
   }
   else if (cmd === 'cat'){
     required.cat(inputData);
   }
+  else if (cmd === 'head'){
+    output = required.head(inputData);
+  }
+  else if (cmd === 'curl'){
+    output = required.curl(inputData);
+  }
+  required.done(output);
+
 });
 
