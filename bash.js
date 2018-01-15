@@ -24,18 +24,16 @@ process.stdin.on('data', function (data) {
     required.ls(null, done);
   }
   else if (cmd === 'echo'){
-    output = required.echo(inputData);
+    required.echo(inputData, done);
   }
   else if (cmd === 'cat'){
-    required.cat(inputData);
+    required.cat(inputData, done);
   }
-  else if (cmd === 'head'){
-    output = required.head(inputData);
-  }
+  // else if (cmd === 'head'){
+  //   required.head(inputData, done);
+  // }
   else if (cmd === 'curl'){
-    output = required.curl(inputData);
+    required.curl(inputData, done);
   }
-  required.done(output);
-
 });
 
