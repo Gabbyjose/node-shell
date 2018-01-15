@@ -1,4 +1,4 @@
-//console.log(Object.keys(process));
+var required = require('./commands.js');
 
 process.stdout.write('prompt > ');
 
@@ -8,14 +8,10 @@ process.stdin.on('data', function (data) {
   var output;
 
   if (cmd === 'pwd'){
-    output = process.cwd();
+    required.pwd();
   }
   else if (cmd === 'date'){
     output = new Date().toString();
   }
-
-  process.stdout.write(output);
-  process.stdout.write('\nprompt > ');
-
 });
 
